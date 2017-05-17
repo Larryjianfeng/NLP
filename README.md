@@ -37,7 +37,7 @@ EFFICIENT VECTOR REPRESENTATION FOR DOCUMENTS THROUGH CORRUPTION
 - 模型结构图：
 ![Alt text](/imgs/doc2vecc.png)
 	- 不同于word2vec的地方：
-	<img src="/papers/imgs/doc2vecc_2.png" width="80%" height="80%">
+	<img src="/imgs/doc2vecc_2.png" width="80%" height="80%">
 	这里上面的那个式子我理解为每个doc vector是不断变化的(corruption)，但是初始为所有词向量的平均值；
 	- 其他地方都很简单；
 	- 具体效果有待实验，不过这个方法可以同时训练词向量；
@@ -52,7 +52,7 @@ Introduction to different gradient descend methods:
 - Stochastic Gradient Descend:
 ![Alt text](/imgs/SGD.PNG)
 	- SGD 是相当于batch gradient descend来说的，SGD对每一个训练样本都更新其参数，这样频繁的更新会使得目标函数波动幅度很大，同时收敛迅速；
-	![Alt text](/papers/imgs/sgd_fluctuation.png)
+	![Alt text](/imgs/sgd_fluctuation.png)
 	- 当我们慢慢减少SGD的learning rate的时候，几乎可以保证损失函数能收敛到局部最小值(non-convex函数)和全局最小值(convex函数)
 	- 优点就是收敛迅速，缺点个人认为是要不断调整learning rate.
 
