@@ -1,3 +1,11 @@
+Boosting and neural network(非论文，我自己的问题)
+---
+- 问题就是：我现在做机器人对话，有些反馈数据，如何利用这部分feedback数据，我联想到了boosting，但是基本上没有关于boosting在NN上的应用，为什么？
+- 猜想：
+	- 1：boosting里面都是弱的和不稳定的分类器；由弱的分类器构成了一个比较复杂的分类边界（decision boundaries），但是NN本身就几乎可以模拟任何复杂的函数，就像AMD八核胶水敌不过intel双核的区别一样；
+	- 2：想一想神经网络和传统机器学习的训练方式不同，神经网络是一个batch一个batch训练，将数据过很多遍，而且使用dropout避免过拟合，iteration很多次；然而传统的比如gradient boosting是通过多次迭代，每次迭代最优化一个参数来使得最终的loss最小，从这个角度看，NN就是gradient boosting的"无限"迭代状态,其实不是无限，因为NN的参数还是有限的；
+	- 3：本人尚未完全找到一个有效利用feedback的方法，如果有想法，请告知 jy2641@columbia.edu;
+
 Curriculum Learning
 ---
 - 解决的问题：这是bengio大神的文章，因为他发现有时候有些深度网络要取的比其他深度网络更好的结果，而且务监督的预训练有时候让模型在测试集上表现更好，他提出了这中curriculum learning的思想就是想通过一步步的训练让模型收敛更快，表现更好
