@@ -1,0 +1,28 @@
+- 1: MDP: 马尔科夫决策过程
+---
+	- 马尔科夫决策过程说的是一个{action, state, reward, P state transition, discount factor}的问题；状态是完全可见的，采取一个action，state会变，然后获得一个reward；注意到每个状态对应一个value function，是对未来的action导致reward的一个折现值；
+	- 为什么说是马尔科夫呢，因为t+1的状态仅跟t的状态有关，跟之前的history无关
+	- 一个policy说的是在已知state的情况下应该采取的action策略；
+	- 部分可见的马尔科夫决策过程说的是状态不完全可见，但是当前可见的observation跟state相关，并且有个observation函数，which取决于当前的状态和上一步的action；
+	- 部分可见的马尔科夫还加入了一个belief state，就是说已经知道历史观察数据(action， obvservation， reward， action， observation。。。)之后的一个隐状态分布；
+	- 吐槽一下, 真不知道为什么跟分布有关的很多东西都被称作belief, 信仰？
+
+- 2: DP: policy iteration and value iteration
+---
+	- policy iteration: 已经知道某个plicy，通过iteration来得到每个状态的value
+		- 计算方法：iterative application of Bellman expectation backup
+	- value iteration: 找到最优的policy以及最优policy下的每个状态的value
+		- 计算方法:iterative application of Bellman optimality backup
+
+- 3: Model-Free Prediction
+---
+	- 3.1: Incremental Monte-Carlo Updates:
+		- 3.1.1: 现在假设MDP里面的reward和transition matrix都是未知的，这个时候就不能直接通过之前的方法计算policy在每个state的时候的value了
+		- 3.1.2：可以通过monte carlo的方法，随机模拟一个序列，序列mean值收敛到期望的原理，每次随机模拟出一列state，action，return。。。之后，跟新当前的value， V(St) <- V(St) + 1/(N(St))(Gt - V(St)), N(St)是当前的迭代次数，Gt是当前状态当前迭代次数的return；
+	- 3.2： Temporal-Difference learning
+		- 3.2.1: MC的话必须在每一段iteration序列完成之后才能更新参数，但是TD的话每一步都可以更新参数；
+		- 3.2.2: V(St) <- V(St) + alpha*(Rt+1 + rV(St+1) - V(St))
+		- 3.2.3: MC对初始值不敏感，但是TD对初始值非常敏感；
+	- 3.3： forward TD(lamda)和backward TD(lambda):
+		- forward TD是在TD的基础上用Gt代替Rt+1 + rV(St+1)，Gt的算法是一个折现的n个Gt的加和；
+		- backward TD的思想是每个状态都应该被充分考虑到，因此状态改变之后会有一段持续时间的影响，V(St) <- V(St) + alpha*(Rt+1 + rV(St+1) - V(St))*Et(s), Et(s)可以理解为t-1的状态和t的状态合起来的影响因子；
