@@ -4,6 +4,7 @@ NN model stacks
 - 对于多分类问题（1000类），能不能用一个模型进行粗分类缩小范围，再用另一个模型进行精分类？
 - 对于问题匹配模型，我先用autoencoder模型去top 10的句子，再用RNN进行排序，得到了大概7%的提升，不知道有木有什么数学依据；
 - 下面是比较精髓的一段代码：
+
 			# 因为tf.gather得缺陷，最好的解决方案是reshape到一维向量再index
 			_, top5idx = tf.nn.top_k(pred, tpk)
 			bs = tf.expand_dims(self.batch_size, -1)
