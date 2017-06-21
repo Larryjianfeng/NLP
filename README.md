@@ -1,3 +1,26 @@
+NN model stacks
+---
+- 这个不是论文，是我自己工作里面实验的结果记录
+- 对于多分类问题（1000类），能不能用一个模型进行粗分类缩小范围，再用另一个模型进行精分类？
+- 对于问题匹配模型，我先用autoencoder模型去top 10的句子，再用RNN进行排序，得到了大概7%的提升，不知道有木有什么数学依据；
+- 下面是比较精髓的一段代码：
+			# 因为tf.gather得缺陷，最好的解决方案是reshape到一维向量再index
+			_, top5idx = tf.nn.top_k(pred, tpk)
+			bs = tf.expand_dims(self.batch_size, -1)
+			top5idx = bs*self.num_anses + top5idx
+			# simic是rnn得到的对每个类的结果
+			# 主要是用reshape+index的方法解决tf.gather的缺陷；
+			self.simicr = tf.reshape(simic, [-1])
+			top5idx = tf.reshape(top5idx, [-1])
+
+			simi2 = tf.gather(self.simicr, top5idx)
+			simi2 = tf.reshape(simi2, [-1, tpk])
+			simi2 = tf.concat(1, [simi2, simitrue])
+			simi2 = tf.nn.softmax(simi2, -1)
+			_ = tf.expand_dims([1.0]*tpk + [-1.0], -1)
+- 如果有更好的方法，请指正；
+
+
 Boosting and neural network(非论文，我自己的问题)
 ---
 - 问题就是：我现在做机器人对话，有些反馈数据，如何利用这部分feedback数据，我联想到了boosting，但是基本上没有关于boosting在NN上的应用，为什么？
