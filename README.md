@@ -1,3 +1,15 @@
+ Rethinking the inception architecture for computer vision
+---
+- 问题：GoogLeNet在做图片分类的时候取得了很好的效果，其中inception结构的作用很大，作者介绍了inception的直觉和一些经验之谈；做NLP的时候很多场景也需要用到CNN,遂将这篇论文的理解记录于此；
+- General Design Principles
+	- 1: 避免representatinal bottlenecks；我的理解是，NN从输入到输出可以看作一个信息流动，每层做convolution或者其他变换都会将sample映射成新的presentation，比如一个句子先被你变成32*256的embeding表示，做了RNN之后又会变成32*rnn_output_dimesion的表示，作者的意思是每次变幻的时候都不要太激进，比如你不能一下子把一个256*256的表示变成2*2的表示，这样会造成大量的信息损失；
+	- 2：高维度的representation在network里面更容易process；这个我理解为数据初步做convolution的时候怎么样搞都可以，经过几次conv和maxpooling之后就需要小心翼翼的做process了（我理解的可能不靠谱）；
+	- 3：spatial aggregation在低维度的representation的时候可以几乎不损失信息；这点说的就是做3*3convolution或者其他空间信息压缩的时候，先降低representation的维度；
+	- 4： 长度和宽度保持平衡；
+- Factorizing Convolutions with Large Filters
+	- 1: 用更多的size更小的convolution，比如将5*5的convolution替换成3*3 on top of 3*3；
+	- 2：用对称的convolution结构，比如将n*n的 convolution替换成1*n on top of n*1；
+
 NN model stacks
 ---
 - 这个不是论文，是我自己工作里面实验的结果记录
