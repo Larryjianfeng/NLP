@@ -1,4 +1,18 @@
- Rethinking the inception architecture for computer vision
+Attention Is All You Need
+---
+- 问题：之前facbook的研究人员用自家的cnn做翻译模型，做出来比G家的rnn又好又快，G家的研究人员于是弄了个又不是CNN又不是rnn的attention模型，就是这个，于是又做到了比facebook的模型更快更好；
+- 核心：multihead_attention结构，这个是dot attention的一个扩展，使用八个attention并行运算
+	- 比如要做attention的两个矩阵分别是query和keys；
+	- 将query和keys映射到8*num_heads, 然后再分割成八份，分别做attention计算；
+	- query乘以keys矩阵，再除以keys的维度的方根，再将keys填充部分的都变成0，取softmax作为attention
+	- 之后attention再对query填充的部分变成0，再矩阵乘以keys作为输出
+	- 注意到用六个multihead_attention结构叠加起来；
+- multihead_attention后面用一个feedforward网络输出一个type和shape都相同的矩阵
+- encoding的时候注意到用了位置矩阵，就是word embedding加一个position matrix合起来训练
+- encoder和decoder分别对自己用了attention之后，记作encoder'和decoder',再将其输入multihead_attention网络得到最终输出, 输出的向量映射到一个宽度为vocabulary size的向量，取值最大的位置作为目标词汇；
+- 评论：等我实验了再来评论
+
+Rethinking the inception architecture for computer vision
 ---
 - 问题：GoogLeNet在做图片分类的时候取得了很好的效果，其中inception结构的作用很大，作者介绍了inception的直觉和一些经验之谈；做NLP的时候很多场景也需要用到CNN,遂将这篇论文的理解记录于此；
 - General Design Principles
