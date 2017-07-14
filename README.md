@@ -10,7 +10,7 @@ Attention Is All You Need
 - multihead_attention后面用一个feedforward网络输出一个type和shape都相同的矩阵
 - encoding的时候注意到用了位置矩阵，就是word embedding加一个position matrix合起来训练
 - encoder和decoder分别对自己用了attention之后，记作encoder'和decoder',再将其输入multihead_attention网络得到最终输出, 输出的向量映射到一个宽度为vocabulary size的向量，取值最大的位置作为目标词汇；
-- 评论：等我实验了再来评论
+- 评论：因为工作原因没有尝试类似于翻译模型的generative M, 但是我试了一下分别对问题答案做self-attention计算相似度的情况，发现效果还可以，达到了裸LSTM的水平；
 
 Rethinking the inception architecture for computer vision
 ---
